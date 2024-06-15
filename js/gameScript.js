@@ -34,7 +34,7 @@ const monsters = [
     health: 60,
   },
   {
-    name: "dragon",
+    name: "boss",
     level: 20,
     health: 300,
   },
@@ -42,8 +42,8 @@ const monsters = [
 const locations = [
   {
     name: "town square",
-    "button text": ["Go to store", "Go to cave", "Fight dragon"],
-    "button functions": [goStore, goCave, fightDragon],
+    "button text": ["Go to store", "Go to cave", "Fight boss"],
+    "button functions": [goStore, goCave, fightBoss],
     text: 'You are in the town square. You see a sign that says "Store".',
   },
   {
@@ -82,13 +82,13 @@ const locations = [
     name: "lose",
     "button text": ["REPLAY?", "REPLAY?", "REPLAY?"],
     "button functions": [restart, restart, restart],
-    text: "You die. &#x2620;",
+    text: "You die.",
   },
   {
     name: "win",
     "button text": ["REPLAY?", "REPLAY?", "REPLAY?"],
     "button functions": [restart, restart, restart],
-    text: "You defeat the dragon! YOU WIN THE GAME! &#x1F389;",
+    text: "You defeat the boss! YOU WIN THE GAME!",
   },
   {
     name: "easter egg",
@@ -101,7 +101,7 @@ const locations = [
 // initialize buttons
 button1.onclick = goStore;
 button2.onclick = goCave;
-button3.onclick = fightDragon;
+button3.onclick = fightBoss;
 
 function update(location) {
   monsterStats.style.display = "none";
@@ -179,7 +179,7 @@ function fightBeast() {
   goFight();
 }
 
-function fightDragon() {
+function fightBoss() {
   fighting = 2;
   goFight();
 }
@@ -253,7 +253,7 @@ function winGame() {
 function restart() {
   xp = 0;
   health = 100;
-  gold = 50;
+  gold = 15;
   currentWeapon = 0;
   inventory = ["stick"];
   goldText.innerText = gold;

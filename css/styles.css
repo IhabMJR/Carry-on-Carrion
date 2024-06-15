@@ -10,51 +10,61 @@
 }
 
 :root {
-  --black: ;
+  --white: #E6FFFF;
+  --gray: #676D75;
+  --red: #D13C2A;
+  --dark-gray: #303742;
+  --black: #0D121A;
 }
 
 body {
-    background-color: #0a0a23;
+    background-color: var(--black);
   }
   
   .title {
     font-family: gothica_bold;
-    color: #ffffff;
-    font-size: 65px;
+    color: var(--white);
+    font-size: 70px;
     text-align: center;
-    width: 550px;
+    width: 600px;
     margin: 20vh auto 5vh;
   }
 
   #text {
-    background-color: #0a0a23;
-    color: #ffffff;
-    padding: 10px;
+    background-color: var(--black);
+    color: var(--white);
+    padding: 15px;
   }
   
   #game {
     font-family: lggothic;
-    max-width: 500px;
-    max-height: 400px;
-    background-color: #ffffff;
-    color: #ffffff;
+    font-size: 22px;
+    max-width: 600px;
+    max-height: 500px;
+    background-color: var(--white);
+    color: var(--white);
     margin: 30px auto 0px;
     padding: 10px;
   }
   
+  #controls {
+    display: flex;
+    justify-content: space-around;
+  }
+
   #controls,
   #stats {
-    border: 1px solid #0a0a23;
+    border: 1px solid var(--black);
     padding: 5px;
-    color: #0a0a23;
+    color: var(--black);
   }
   
   #monsterStats {
     display: none;
-    border: 1px solid #0a0a23;
+    border: 1px solid var(--black);
     padding: 5px;
-    color: #ffffff;
-    background-color: #c70d0d;
+    color: var(--white);
+    background-color: var(--red);
   }
   
   .stat {
@@ -64,8 +74,9 @@ body {
   button {
     cursor: pointer;
     font-family: lggothic;
-    color: #0a0a23;
-    background-color: #feac32;
-    background-image: linear-gradient(#fecc4c, #ffac33);
-    border: 3px solid #feac32;
+    font-size: 22px;
+    width: 150px;
+    color: var(--black);
+    background-color: var(--gray);
+    border: 4px solid var(--dark-gray);
   }
