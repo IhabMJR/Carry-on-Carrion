@@ -43,8 +43,8 @@ const monsters = [
 const locations = [
   {
     name: "town square",
-    "button text": ["Go to store", "Go to cave", "Fight boss"],
-    "button functions": [goStore, goCave, fightBoss],
+    "button text": ["Go to store", "Go to forest", "Fight boss"],
+    "button functions": [goStore, goForest, fightBoss],
     text: 'You are in the town square. You see a sign that says "Store".',
   },
   {
@@ -58,10 +58,10 @@ const locations = [
     text: "You enter the store.",
   },
   {
-    name: "cave",
+    name: "forest",
     "button text": ["Fight slime", "Fight fanged beast", "Go to town square"],
     "button functions": [fightSlime, fightBeast, goTown],
-    text: "You enter the cave. You see some monsters.",
+    text: "You enter the forest. You see some monsters.",
   },
   {
     name: "fight",
@@ -101,7 +101,7 @@ const locations = [
 
 // initialize buttons
 button1.onclick = goStore;
-button2.onclick = goCave;
+button2.onclick = goForest;
 button3.onclick = fightBoss;
 
 function update(location) {
@@ -123,7 +123,7 @@ function goStore() {
   update(locations[1]);
 }
 
-function goCave() {
+function goForest() {
   update(locations[2]);
 }
 
