@@ -4,6 +4,7 @@ let gold = 15;
 let currentWeapon = 0;
 let fighting;
 let monsterHealth;
+let forestComplete = false;
 let inventory = ["stick"];
 
 const button1 = document.querySelector("#button1");
@@ -208,6 +209,11 @@ function attack() {
   if (health <= 0) {
     lose();
   } else if (monsterHealth <= 0) {
+    if (fighting === 1) {
+      forestComplete = true;
+      console.log(forestComplete)
+      defeatMonster();
+    }
     if (fighting === 2) {
       winGame();
     } else {
