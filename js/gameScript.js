@@ -42,41 +42,41 @@ const monsters = [
 ];
 const locations = [
   {
-    name: "town square",
+    name: "camp",
     "button text": ["Go to store", "Go to forest", "Fight boss"],
-    "button functions": [goStore, goForest, fightBoss],
-    text: 'You are in the town square. You see a sign that says "Store".',
+    "button functions": [goMerchant, goForest, fightBoss],
+    text: 'You are at your camp. A merchant warms himself by the fire, his steed resting by his side.',
   },
   {
     name: "store",
     "button text": [
       "Buy 10 health (10 gold)",
       "Buy weapon (30 gold)",
-      "Go to town square",
+      "Go to camp",
     ],
-    "button functions": [buyHealth, buyWeapon, goTown],
+    "button functions": [buyHealth, buyWeapon, goCamp],
     text: "You enter the store.",
   },
   {
     name: "forest",
-    "button text": ["Fight slime", "Fight fanged beast", "Go to town square"],
-    "button functions": [fightSlime, fightBeast, goTown],
+    "button text": ["Fight slime", "Fight fanged beast", "Go to camp"],
+    "button functions": [fightSlime, fightBeast, goCamp],
     text: "You enter the forest. You see some monsters.",
   },
   {
     name: "fight",
-    "button text": ["Attack", "Dodge", "Run"],
-    "button functions": [attack, dodge, goTown],
+    "button text": ["Attack", "Heal", "Run"],
+    "button functions": [attack, heal, goCamp],
     text: "You are fighting a monster.",
   },
   {
     name: "kill monster",
     "button text": [
-      "Go to town square",
-      "Go to town square",
-      "Go to town square",
+      "Go to camp",
+      "Go to camp",
+      "Go to camp",
     ],
-    "button functions": [goTown, goTown, easterEgg],
+    "button functions": [goCamp, goCamp, easterEgg],
     text: 'The monster screams "Arg!" as it dies. You gain experience points and find gold.',
   },
   {
@@ -93,14 +93,14 @@ const locations = [
   },
   {
     name: "easter egg",
-    "button text": ["2", "8", "Go to town square?"],
-    "button functions": [pickTwo, pickEight, goTown],
+    "button text": ["2", "8", "Go to camp?"],
+    "button functions": [pickTwo, pickEight, goCamp],
     text: "You find a secret game. Pick a number above. Ten numbers will be randomly chosen between 0 and 10. If the number you choose matches one of the random numbers, you win!",
   },
 ];
 
 // initialize buttons
-button1.onclick = goStore;
+button1.onclick = goMerchant;
 button2.onclick = goForest;
 button3.onclick = fightBoss;
 
@@ -115,11 +115,11 @@ function update(location) {
   text.innerHTML = location.text;
 }
 
-function goTown() {
+function goCamp() {
   update(locations[0]);
 }
 
-function goStore() {
+function goMerchant() {
   update(locations[1]);
 }
 
@@ -236,8 +236,8 @@ function isMonsterHit() {
   return Math.random() > 0.2 || health < 20;
 }
 
-function dodge() {
-  text.innerText = "You dodge the attack from the " + monsters[fighting].name;
+function heal() {
+  text.innerText = "You heal the attack from the " + monsters[fighting].name;
 }
 
 function defeatMonster() {
@@ -265,7 +265,7 @@ function restart() {
   goldText.innerText = gold;
   healthText.innerText = health;
   xpText.innerText = xp;
-  goTown();
+  goCamp();
 }
 
 function easterEgg() {

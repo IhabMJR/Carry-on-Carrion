@@ -10,73 +10,79 @@
 }
 
 :root {
-  --white: #E6FFFF;
-  --gray: #676D75;
-  --red: #D13C2A;
+  --white: #e6ffff;
+  --gray: #676d75;
+  --red: #d13c2a;
   --dark-gray: #303742;
-  --black: #0D121A;
+  --black: #0d121a;
 }
 
 body {
-    background-color: var(--black);
-  }
-  
-  .title {
-    font-family: gothica_bold;
-    color: var(--white);
-    font-size: 70px;
-    text-align: center;
-    width: 600px;
-    margin: 20vh auto 5vh;
-  }
+  background-color: var(--black);
+}
 
-  #text {
-    background-color: var(--black);
-    color: var(--white);
-    padding: 15px;
-  }
-  
-  #game {
-    font-family: lggothic;
-    font-size: 22px;
-    max-width: 600px;
-    max-height: 500px;
-    background-color: var(--white);
-    color: var(--white);
-    margin: 30px auto 0px;
-    padding: 10px;
-  }
-  
-  #controls {
-    display: flex;
-    justify-content: space-around;
-  }
+.title {
+  font-family: gothica_bold;
+  color: var(--white);
+  font-size: 70px;
+  text-align: center;
+  width: 600px;
+  margin: 20vh auto 5vh;
+}
 
-  #controls,
-  #stats {
-    border: 1px solid var(--black);
-    padding: 5px;
-    color: var(--black);
-  }
-  
-  #monsterStats {
-    display: none;
-    border: 1px solid var(--black);
-    padding: 5px;
-    color: var(--white);
-    background-color: var(--red);
-  }
-  
-  .stat {
-    padding-right: 10px;
-  }
-  
-  button {
-    cursor: pointer;
-    font-family: lggothic;
-    font-size: 22px;
-    width: 150px;
-    color: var(--black);
-    background-color: var(--gray);
-    border: 4px solid var(--dark-gray);
-  }
+#text {
+  background-color: var(--black);
+  color: var(--white);
+  padding: 15px;
+}
+
+#game {
+  font-family: lggothic;
+  font-size: 22px;
+  max-width: 600px;
+  max-height: 500px;
+  background-color: var(--white);
+  color: var(--white);
+  margin: 30px auto 0px;
+  padding: 10px;
+}
+
+#controls {
+  display: flex;
+  justify-content: space-around;
+}
+
+#controls,
+#stats {
+  border: 1px solid var(--black);
+  padding: 5px;
+  color: var(--black);
+}
+
+#monsterStats {
+  display: none;
+  border: 1px solid var(--black);
+  padding: 5px;
+  color: var(--white);
+  background-color: var(--red);
+}
+
+.stat {
+  padding-right: 10px;
+}
+
+button {
+  cursor: pointer;
+  font-family: lggothic;
+  font-size: 22px;
+  width: 150px;
+  color: var(--black);
+  background-color: var(--gray);
+  border: 4px solid var(--dark-gray);
+}
+
+button:hover {
+  color: var(--white);
+  background-color: var(--dark-gray);
+  border: 4px solid var(--black);
+}
