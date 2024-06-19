@@ -93,7 +93,7 @@ const locations = [
     name: "win",
     "button text": ["REPLAY?", "REPLAY?", "REPLAY?"],
     "button functions": [restart, restart, restart],
-    text: "You defeat the -! YOU WIN THE GAME!",
+    text: "You defeat the warrior! YOU WIN THE GAME!",
   },
   {
     name: "easter egg",
