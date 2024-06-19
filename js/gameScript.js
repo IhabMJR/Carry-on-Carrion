@@ -43,23 +43,23 @@ const monsters = [
 const locations = [
   {
     name: "camp",
-    "button text": ["Go to store", "Go to forest", "Fight boss"],
+    "button text": ["Speak to the merchant", "Explore the forest", "Fight boss"],
     "button functions": [goMerchant, goForest, fightBoss],
     text: 'You are at your camp. A merchant warms himself by the fire, his steed resting by his side.',
   },
   {
-    name: "store",
+    name: "merchant",
     "button text": [
       "Buy 10 health (10 gold)",
       "Buy weapon (30 gold)",
       "Go to camp",
     ],
     "button functions": [buyHealth, buyWeapon, goCamp],
-    text: "You enter the store.",
+    text: "You engage in discussion with the merchant.",
   },
   {
     name: "forest",
-    "button text": ["Fight slime", "Fight fanged beast", "Go to camp"],
+    "button text": ["Fight slime", "Fight fanged beast", "Return to camp"],
     "button functions": [fightSlime, fightBeast, goCamp],
     text: "You enter the forest. You see some monsters.",
   },
