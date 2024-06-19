@@ -2,6 +2,8 @@ let xp = 0;
 let health = 100;
 let gold = 15;
 let currentWeapon = 0;
+let maxWispy = 1;
+let currentWispy = 1;
 let fighting;
 let monsterHealth;
 let forestComplete = false;
@@ -35,7 +37,7 @@ const monsters = [
     health: 60,
   },
   {
-    name: "boss",
+    name: "Wild Dog Warrior",
     level: 20,
     health: 300,
   },
@@ -43,18 +45,22 @@ const monsters = [
 const locations = [
   {
     name: "camp",
-    "button text": ["Speak to the merchant", "Explore the forest", "Fight boss"],
+    "button text": [
+      "Speak to the merchant",
+      "Explore the forest",
+      "Challenge the Warrior",
+    ],
     "button functions": [goMerchant, goForest, fightBoss],
-    text: 'You are at your camp. A merchant warms himself by the fire, his steed resting by his side.',
+    text: "You are at your camp. A merchant warms himself by the fire, his steed resting by his side. As you meditate, your vials are imbued with Wispy.",
   },
   {
     name: "merchant",
     "button text": [
-      "Buy 10 health (10 gold)",
+      "Buy a vial of Wispy (25 gold)",
       "Buy weapon (30 gold)",
       "Go to camp",
     ],
-    "button functions": [buyHealth, buyWeapon, goCamp],
+    "button functions": [buyWispy, buyWeapon, goCamp],
     text: "You engage in discussion with the merchant.",
   },
   {
@@ -71,11 +77,7 @@ const locations = [
   },
   {
     name: "kill monster",
-    "button text": [
-      "Go to camp",
-      "Go to camp",
-      "Go to camp",
-    ],
+    "button text": ["Go to camp", "Go to camp", "Go to camp"],
     "button functions": [goCamp, goCamp, easterEgg],
     text: 'The monster screams "Arg!" as it dies. You gain experience points and find gold.',
   },
@@ -89,7 +91,7 @@ const locations = [
     name: "win",
     "button text": ["REPLAY?", "REPLAY?", "REPLAY?"],
     "button functions": [restart, restart, restart],
-    text: "You defeat the boss! YOU WIN THE GAME!",
+    text: "You defeat the -! YOU WIN THE GAME!",
   },
   {
     name: "easter egg",
@@ -117,6 +119,8 @@ function update(location) {
 
 function goCamp() {
   update(locations[0]);
+  currentWispy = maxWispy;
+  wispyText.innerText = currentWispy;
 }
 
 function goMerchant() {
@@ -127,14 +131,19 @@ function goForest() {
   update(locations[2]);
 }
 
-function buyHealth() {
-  if (gold >= 10) {
-    gold -= 10;
-    health += 10;
-    goldText.innerText = gold;
-    healthText.innerText = health;
+function buyWispy() {
+  if (maxWispy > 5) {
+    if (gold >= 25) {
+      gold -= 25;
+      maxWispy++;
+      currentWispy++;
+      goldText.innerText = gold;
+      wispyText.innerText = currentWispy;
+    } else {
+      text.innerText = "You do not have enough gold to buy a vial of Wispy.";
+    }
   } else {
-    text.innerText = "You do not have enough gold to buy health.";
+    text.innerText = "The merchant looks at you in utter disbelief, you have no more place on your person to carry anymore vials."
   }
 }
 
@@ -211,7 +220,7 @@ function attack() {
   } else if (monsterHealth <= 0) {
     if (fighting === 1) {
       forestComplete = true;
-      console.log(forestComplete)
+      console.log(forestComplete);
       defeatMonster();
     }
     if (fighting === 2) {
@@ -237,7 +246,19 @@ function isMonsterHit() {
 }
 
 function heal() {
-  text.innerText = "You heal the attack from the " + monsters[fighting].name;
+  if (currentWispy > 0) {
+    currentWispy--;
+    health += 15;
+    wispyText.innerText = currentWispy;
+    healthText.innerText = health;
+    text.innerText = "You drink a vial of Wispy, you regain 15 health.";
+  } else if (health <= 25) {
+    text.innerText = '"You grow weaker Carrion, perhaps you shall meet your end once more?" The voice whispers. You are out of Wispy vials.';
+  } else if (health >= 85) {
+    text.innerText = '"Do you truly fear your opponent this much?" the voice inside you rings out in a shameful tone. You are out of Wispy vials.';
+  } else {
+    text.innerText = "You're all out of Wispy.";
+  }
 }
 
 function defeatMonster() {
@@ -257,13 +278,16 @@ function winGame() {
 }
 
 function restart() {
-  xp = 0;
   health = 100;
+  maxWispy = 1;
+  currentWispy = maxWispy;
   gold = 15;
+  xp = 0;
   currentWeapon = 0;
   inventory = ["stick"];
   goldText.innerText = gold;
   healthText.innerText = health;
+  wispyText.innerText = currentWispy;
   xpText.innerText = xp;
   goCamp();
 }
