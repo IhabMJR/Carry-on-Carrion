@@ -2,8 +2,8 @@ let xp = 0;
 let health = 100;
 let gold = 15;
 let currentWeapon = 0;
-let maxWispy = 1;
 let currentWispy = 1;
+let maxWispy = 1;
 let fighting;
 let monsterHealth;
 let forestComplete = false;
@@ -13,26 +13,28 @@ const button1 = document.querySelector("#button1");
 const button2 = document.querySelector("#button2");
 const button3 = document.querySelector("#button3");
 const text = document.querySelector("#text");
-const xpText = document.querySelector("#xpText");
 const healthText = document.querySelector("#healthText");
+const wispyText = document.querySelector("#wispyText");
+const maxWispyText = document.querySelector("#maxWispyText");
 const goldText = document.querySelector("#goldText");
+const xpText = document.querySelector("#xpText");
 const monsterStats = document.querySelector("#monsterStats");
 const monsterName = document.querySelector("#monsterName");
 const monsterHealthText = document.querySelector("#monsterHealth");
 const weapons = [
-  { name: "stick", power: 5 },
+  { name: "claws", power: 5 },
   { name: "dagger", power: 30 },
-  { name: "claw hammer", power: 50 },
-  { name: "sword", power: 100 },
+  { name: "bastard sword", power: 50 },
+  { name: "greatsword", power: 100 },
 ];
 const monsters = [
   {
-    name: "slime",
+    name: "Lesser Shadow",
     level: 2,
     health: 15,
   },
   {
-    name: "fanged beast",
+    name: "Shadow",
     level: 8,
     health: 60,
   },
@@ -65,8 +67,8 @@ const locations = [
   },
   {
     name: "forest",
-    "button text": ["Fight slime", "Fight fanged beast", "Return to camp"],
-    "button functions": [fightSlime, fightBeast, goCamp],
+    "button text": ["Fight lesser shadow", "Fight shadow", "Return to camp"],
+    "button functions": [fightLesserShadow, fightShadow, goCamp],
     text: "You enter the forest. You see some monsters.",
   },
   {
@@ -79,7 +81,7 @@ const locations = [
     name: "kill monster",
     "button text": ["Go to camp", "Go to camp", "Go to camp"],
     "button functions": [goCamp, goCamp, easterEgg],
-    text: 'The monster screams "Arg!" as it dies. You gain experience points and find gold.',
+    text: 'The monster vanishes as it dies, any trace of its body is now gone to the wind. You gain experience points and find gold.',
   },
   {
     name: "lose",
@@ -132,18 +134,19 @@ function goForest() {
 }
 
 function buyWispy() {
-  if (maxWispy > 5) {
+  if (maxWispy < 5) {
     if (gold >= 25) {
       gold -= 25;
-      maxWispy++;
       currentWispy++;
+      maxWispy++;
       goldText.innerText = gold;
       wispyText.innerText = currentWispy;
+      maxWispyText.innerText = maxWispy;
     } else {
       text.innerText = "You do not have enough gold to buy a vial of Wispy.";
     }
   } else {
-    text.innerText = "The merchant looks at you in utter disbelief, you have no more place on your person to carry anymore vials."
+    text.innerText = "The merchant looks at you in utter disbelief, you have no more place on your person to carry anymore vials.";
   }
 }
 
@@ -179,12 +182,12 @@ function sellWeapon() {
   }
 }
 
-function fightSlime() {
+function fightLesserShadow() {
   fighting = 0;
   goFight();
 }
 
-function fightBeast() {
+function fightShadow() {
   fighting = 1;
   goFight();
 }
@@ -253,9 +256,11 @@ function heal() {
     healthText.innerText = health;
     text.innerText = "You drink a vial of Wispy, you regain 15 health.";
   } else if (health <= 25) {
-    text.innerText = '"You grow weaker Carrion, perhaps you shall meet your end once more?" The voice whispers. You are out of Wispy vials.';
+    text.innerText =
+      '"You grow weaker Carrion, perhaps you shall meet your end once more?" The voice whispers. You are out of Wispy vials.';
   } else if (health >= 85) {
-    text.innerText = '"Do you truly fear your opponent this much?" the voice inside you rings out in a shameful tone. You are out of Wispy vials.';
+    text.innerText =
+      '"Do you truly fear your opponent this much?" the voice inside you rings out in a shameful tone. You are out of Wispy vials.';
   } else {
     text.innerText = "You're all out of Wispy.";
   }
