@@ -29,12 +29,12 @@ const weapons = [
 ];
 const monsters = [
   {
-    name: "Lesser Shadow",
+    name: "lesser shadow",
     level: 2,
     health: 15,
   },
   {
-    name: "Shadow",
+    name: "shadow",
     level: 8,
     health: 60,
   },
@@ -69,7 +69,7 @@ const locations = [
     name: "forest",
     "button text": ["Fight lesser shadow", "Fight shadow", "Return to camp"],
     "button functions": [fightLesserShadow, fightShadow, goCamp],
-    text: "You enter the forest. You see some monsters.",
+    text: "You journey into the forest. Shadows lurk in every corner of this place wishing to feast on a fresh corpse.",
   },
   {
     name: "fight",
