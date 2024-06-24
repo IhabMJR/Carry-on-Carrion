@@ -7,7 +7,8 @@ let maxWispy = 1;
 let fighting;
 let monsterHealth;
 let forestComplete = false;
-let inventory = ["stick"];
+let inventory = ["claws"];
+/*let playerTurn = true;*/
 
 const button1 = document.querySelector("#button1");
 const button2 = document.querySelector("#button2");
@@ -178,7 +179,7 @@ function sellWeapon() {
     text.innerText = "You sold a " + currentWeapon + ".";
     text.innerText += " In your inventory you have: " + inventory;
   } else {
-    text.innerText = "Don't sell your only weapon!";
+    text.innerText = "The merchant isn't interested in buying any claws today.";
   }
 }
 
@@ -238,6 +239,65 @@ function attack() {
   }
 }
 
+/*function combat() {
+  if (playerTurn = true) {
+    playerAttack()
+  } else {
+    monsterAttack()
+  }
+}
+
+function playerAttack() {
+  text.innerText = "You attack with your " + weapons[currentWeapon].name + ".";
+  if (isMonsterHit()) {
+    monsterHealth -=
+      weapons[currentWeapon].power + Math.floor(Math.random() * xp) + 1;
+      playerTurn = false;
+  } else {
+    text.innerText += " You miss.";
+    playerTurn = false;
+  }
+  monsterHealthText.innerText = monsterHealth;
+  if (health <= 0) {
+    lose();
+  } else if (monsterHealth <= 0) {
+    if (fighting === 1) {
+      forestComplete = true;
+      console.log(forestComplete);
+      defeatMonster();
+    }
+    if (fighting === 2) {
+      winGame();
+    } else {
+      defeatMonster();
+    }
+  }
+}
+
+setTimeout(function monsterAttack() {
+  text.innerText += " The " + monsters[fighting].name + " attacks.";
+  health -= getMonsterAttackValue(monsters[fighting].level);
+  healthText.innerText = health;
+  if (health <= 0) {
+    lose();
+  } else if (monsterHealth <= 0) {
+    if (fighting === 1) {
+      forestComplete = true;
+      console.log(forestComplete);
+      defeatMonster();
+    }
+    if (fighting === 2) {
+      winGame();
+    } else {
+      defeatMonster();
+    }
+  }
+  if (Math.random() <= 0.1 && inventory.length !== 1) {
+    text.innerText += " Their strike hits your " + inventory.pop() + "." + "It breaks.";
+    currentWeapon--;
+  }
+}, 1500);*/
+
 function getMonsterAttackValue(level) {
   const hit = level * 5 - Math.floor(Math.random() * xp);
   console.log(hit);
@@ -271,6 +331,7 @@ function defeatMonster() {
   xp += monsters[fighting].level;
   goldText.innerText = gold;
   xpText.innerText = xp;
+  playerTurn = true;
   update(locations[4]);
 }
 
@@ -288,6 +349,7 @@ function restart() {
   currentWispy = maxWispy;
   gold = 15;
   xp = 0;
+  playerTurn = true;
   currentWeapon = 0;
   inventory = ["stick"];
   goldText.innerText = gold;
