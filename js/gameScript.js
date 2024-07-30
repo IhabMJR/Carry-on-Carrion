@@ -8,6 +8,7 @@ let fighting;
 let monsterHealth;
 let forestComplete = false;
 let inventory = ["claws"];
+let day = 1;
 /*let playerTurn = true;*/
 
 const button1 = document.querySelector("#button1");
@@ -17,6 +18,7 @@ const text = document.querySelector("#text");
 const healthText = document.querySelector("#healthText");
 const wispyText = document.querySelector("#wispyText");
 const maxWispyText = document.querySelector("#maxWispyText");
+const dayText = document.querySelector("#dayText");
 const goldText = document.querySelector("#goldText");
 const xpText = document.querySelector("#xpText");
 const monsterStats = document.querySelector("#monsterStats");
@@ -49,21 +51,21 @@ const locations = [
   {
     name: "camp",
     "button text": [
-      "Speak to the merchant",
+      "Sit by the fire",
       "Explore the forest",
       "Challenge the Warrior",
     ],
-    "button functions": [goMerchant, goForest, fightBoss],
-    text: "You are at your camp. A merchant warms himself by the fire, his steed resting by his side. As you meditate, your vials are imbued with Wispy.",
+    "button functions": [goCampActions, goForest, fightBoss],
+    text: "You are at your camp. A merchant warms himself by the fire, his steed resting by his side.",
   },
   {
     name: "merchant",
     "button text": [
-      "Buy a vial of Wispy (25 gold)",
+      "Buy Wispy (25 gold)",
       "Buy weapon (30 gold)",
-      "Go to camp",
+      "End the conversation",
     ],
-    "button functions": [buyWispy, buyWeapon, goCamp],
+    "button functions": [buyWispy, buyWeapon, goCampActions],
     text: "You engage in discussion with the merchant.",
   },
   {
@@ -82,7 +84,7 @@ const locations = [
     name: "kill monster",
     "button text": ["Go to camp", "Go to camp", "Go to camp"],
     "button functions": [goCamp, goCamp, easterEgg],
-    text: 'The monster vanishes as it dies, any trace of its body is now gone to the wind. You gain experience points and find gold.',
+    text: "The monster vanishes as it dies, any trace of its body is now gone to the wind. You gain experience points and find gold.",
   },
   {
     name: "lose",
@@ -101,6 +103,18 @@ const locations = [
     "button text": ["2", "8", "Go to camp?"],
     "button functions": [pickTwo, pickEight, goCamp],
     text: "You find a secret game. Pick a number above. Ten numbers will be randomly chosen between 0 and 10. If the number you choose matches one of the random numbers, you win!",
+  },
+  {
+    name: "camp actions",
+    "button text": ["Speak to the merchant", "Rest", "Get back up"],
+    "button functions": [goMerchant, goRest, goCamp],
+    text: "You sit down by the campfire, indulging yourself in the rare moments of peace you are allowed.",
+  },
+  {
+    name: "rest",
+    "button text": ["Awaken", "Get up", "Face the world"],
+    "button functions": [goCamp, goCamp, goCamp],
+    text: "As you rest, your vials are imbued with Wispy. The sunlight graces your face." /*use ${} to allow different dreams to play out!*/,
   },
 ];
 
@@ -122,13 +136,23 @@ function update(location) {
 
 function goCamp() {
   update(locations[0]);
-  currentWispy = maxWispy;
-  wispyText.innerText = currentWispy;
 }
+
+function goCampActions() {
+  update(locations[8]);
+};
 
 function goMerchant() {
   update(locations[1]);
 }
+
+function goRest() {
+  update(locations[9]);
+  currentWispy = maxWispy;
+  wispyText.innerText = currentWispy;
+  day++;
+  dayText.innerText = day;
+};
 
 function goForest() {
   update(locations[2]);
@@ -143,11 +167,13 @@ function buyWispy() {
       goldText.innerText = gold;
       wispyText.innerText = currentWispy;
       maxWispyText.innerText = maxWispy;
+      text.innerText = "You purchase a vial of Wispy.";
     } else {
       text.innerText = "You do not have enough gold to buy a vial of Wispy.";
     }
   } else {
-    text.innerText = "The merchant looks at you in utter disbelief, you have no more place on your person to carry anymore vials.";
+    text.innerText =
+      "The merchant looks at you in utter disbelief, you have no more place on your person to carry anymore vials.";
   }
 }
 
