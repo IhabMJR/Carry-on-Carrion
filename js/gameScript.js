@@ -380,6 +380,7 @@ function restart() {
   inventory = ["stick"];
   goldText.innerText = gold;
   healthText.innerText = health;
+  maxWispyText.innerText = maxWispy;
   wispyText.innerText = currentWispy;
   xpText.innerText = xp;
   goCamp();

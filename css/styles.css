@@ -57,6 +57,8 @@ body {
   border: 1px solid var(--black);
   padding: 5px;
   color: var(--black);
+  display: flex;
+  justify-content: space-around;
 }
 
 #monsterStats {
@@ -65,10 +67,6 @@ body {
   padding: 5px;
   color: var(--white);
   background-color: var(--red);
-}
-
-.stat {
-  padding-right: 10px;
 }
 
 button {
