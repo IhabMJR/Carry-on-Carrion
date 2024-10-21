@@ -112,7 +112,7 @@ const locations = [
   },
   {
     name: "rest",
-    "button text": ["Awaken", "Get up", "Face the world"],
+    "button text": ["Carry on", "Carry on", "Carry on"],
     "button functions": [goCamp, goCamp, goCamp],
     text: "As you rest, your vials are imbued with Wispy. The sunlight graces your face." /*use ${} to allow different dreams to play out!*/,
   },
