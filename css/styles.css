@@ -45,7 +45,7 @@ body {
 }
 
 #game-console {
-  position: relative; /* Set relative position to allow absolute positioning within */
+  position: relative;
   font-family: lggothic;
   font-size: 22px;
   max-width: 600px;

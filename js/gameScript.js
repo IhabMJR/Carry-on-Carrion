@@ -14,6 +14,7 @@ let day = 1;
 const button1 = document.querySelector("#button1");
 const button2 = document.querySelector("#button2");
 const button3 = document.querySelector("#button3");
+const controls = document.querySelector("#controls");
 const text = document.querySelector("#text");
 const healthText = document.querySelector("#healthText");
 const wispyText = document.querySelector("#wispyText");
@@ -131,7 +132,33 @@ function update(location) {
   button1.onclick = location["button functions"][0];
   button2.onclick = location["button functions"][1];
   button3.onclick = location["button functions"][2];
-  text.innerHTML = location.text;
+  text.innerHTML = "";
+  type(location.text);
+}
+
+function type(txt) {
+  if (window.typed) {
+    window.typed.destroy();
+  }
+
+  window.typed = new Typed("#text", {
+    strings: [txt],
+    typeSpeed: 10,
+    backSpeed: 10,
+    showCursor: true,
+    cursorChar: "|",
+    autoInsertCss: true,
+    preStringTyped: () => {
+      button1.disabled = true;
+      button2.disabled = true;
+      button3.disabled = true;
+    },
+    onComplete: () => {
+      button1.disabled = false;
+      button2.disabled = false;
+      button3.disabled = false;
+    },
+  });
 }
 
 function goCamp() {
@@ -140,7 +167,7 @@ function goCamp() {
 
 function goCampActions() {
   update(locations[8]);
-};
+}
 
 function goMerchant() {
   update(locations[1]);
@@ -152,7 +179,7 @@ function goRest() {
   wispyText.innerText = currentWispy;
   day++;
   dayText.innerText = day;
-};
+}
 
 function goForest() {
   update(locations[2]);
@@ -167,13 +194,13 @@ function buyWispy() {
       goldText.innerText = gold;
       wispyText.innerText = currentWispy;
       maxWispyText.innerText = maxWispy;
-      text.innerText = "You purchase a vial of Wispy.";
+      type("You purchase a vial of Wispy.");
     } else {
-      text.innerText = "You do not have enough gold to buy a vial of Wispy.";
+      type("You do not have enough gold to buy a vial of Wispy.");
     }
   } else {
-    text.innerText =
-      "The merchant looks at you in utter disbelief, you have no more place on your person to carry anymore vials.";
+    type(
+      "The merchant looks at you in utter disbelief, you have no more place on your person to carry anymore vials.");
   }
 }
 
@@ -184,14 +211,14 @@ function buyWeapon() {
       currentWeapon++;
       goldText.innerText = gold;
       let newWeapon = weapons[currentWeapon].name;
-      text.innerText = "You now have a " + newWeapon + ".";
+      type("You now have a " + newWeapon + ".");
       inventory.push(newWeapon);
       text.innerText += " In your inventory you have: " + inventory;
     } else {
-      text.innerText = "You do not have enough gold to buy a weapon.";
+      type("You do not have enough gold to buy a weapon.");
     }
   } else {
-    text.innerText = "You already have the most powerful weapon!";
+    type("You've already bought every weapon that the merchant has offered you.");
     button2.innerText = "Sell weapon for 15 gold";
     button2.onclick = sellWeapon;
   }
@@ -202,10 +229,10 @@ function sellWeapon() {
     gold += 15;
     goldText.innerText = gold;
     let currentWeapon = inventory.shift();
-    text.innerText = "You sold a " + currentWeapon + ".";
+    type("You sold a " + currentWeapon + ".");
     text.innerText += " In your inventory you have: " + inventory;
   } else {
-    text.innerText = "The merchant isn't interested in buying any claws today.";
+    type("The merchant isn't interested in buying any claws today.");
   }
 }
 
@@ -233,9 +260,7 @@ function goFight() {
 }
 
 function attack() {
-  text.innerText = "The " + monsters[fighting].name + " attacks.";
-  text.innerText +=
-    " You attack it with your " + weapons[currentWeapon].name + ".";
+  type("The " + monsters[fighting].name + " attacks. You attack it with your " + weapons[currentWeapon].name + ".");
   health -= getMonsterAttackValue(monsters[fighting].level);
   if (isMonsterHit()) {
     monsterHealth -=
@@ -340,15 +365,15 @@ function heal() {
     health += 15;
     wispyText.innerText = currentWispy;
     healthText.innerText = health;
-    text.innerText = "You drink a vial of Wispy, you regain 15 health.";
+    type("You drink a vial of Wispy, you regain 15 health.");
   } else if (health <= 25) {
-    text.innerText =
-      '"You grow weaker Carrion, perhaps you shall meet your end once more?" The voice whispers. You are out of Wispy vials.';
+    type(
+      '"You grow weaker Carrion, perhaps you shall meet your end once more?" The voice whispers. You are out of Wispy vials.');
   } else if (health >= 85) {
-    text.innerText =
-      '"Do you truly fear your opponent this much?" the voice inside you rings out in a shameful tone. You are out of Wispy vials.';
+    type(
+      '"Do you truly fear your opponent this much?" the voice inside you rings out in a shameful tone. You are out of Wispy vials.');
   } else {
-    text.innerText = "You're all out of Wispy.";
+    type("You're all out of Wispy.");
   }
 }
 
@@ -377,7 +402,7 @@ function restart() {
   xp = 0;
   playerTurn = true;
   currentWeapon = 0;
-  inventory = ["stick"];
+  inventory = ["claws"];
   goldText.innerText = gold;
   healthText.innerText = health;
   maxWispyText.innerText = maxWispy;
@@ -403,7 +428,7 @@ function pick(guess) {
   while (numbers.length < 10) {
     numbers.push(Math.floor(Math.random() * 11));
   }
-  text.innerText = "You picked " + guess + ". Here are the random numbers:\n";
+  type("You picked " + guess + ". Here are the random numbers:\n");
   for (let i = 0; i < 10; i++) {
     text.innerText += numbers[i] + "\n";
   }
