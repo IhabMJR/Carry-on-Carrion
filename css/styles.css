@@ -19,9 +19,6 @@
 
 body {
   background-color: var(--black);
-  background: url('../img/bg_spritesheet.png') no-repeat;
-  background-position: 0 0;
-  animation: spritesheetAnimation 4s steps(96) infinite;
 }
 
 @keyframes spritesheetAnimation {
