@@ -33,17 +33,17 @@ const weapons = [
 ];
 const monsters = [
   {
-    name: "lesser shadow",
+    name: "Penumbral",
     level: 2,
     health: 15,
   },
   {
-    name: "shadow",
+    name: "Umbral",
     level: 8,
     health: 60,
   },
   {
-    name: "Wild Dog Warrior",
+    name: "Accursed Hydra",
     level: 20,
     health: 300,
   },
@@ -54,7 +54,7 @@ const locations = [
     "button text": [
       "Sit by the fire",
       "Explore the forest",
-      "Challenge the Warrior",
+      "???",
     ],
     "button functions": [goCampActions, goForest, fightBoss],
     text: "You are at your camp. A merchant warms himself by the fire, his steed resting by his side.",
@@ -71,7 +71,7 @@ const locations = [
   },
   {
     name: "forest",
-    "button text": ["Fight lesser shadow", "Fight shadow", "Return to camp"],
+    "button text": ["Fight Penumbraling", "Fight Umbral", "Return to camp"],
     "button functions": [fightLesserShadow, fightShadow, goCamp],
     text: "You journey into the forest. Shadows lurk in every corner of this place wishing to feast on a fresh corpse.",
   },
@@ -132,19 +132,15 @@ function update(location) {
   button1.onclick = location["button functions"][0];
   button2.onclick = location["button functions"][1];
   button3.onclick = location["button functions"][2];
-  text.innerHTML = "";
   type(location.text);
 }
 
 function type(txt) {
-  if (window.typed) {
-    window.typed.destroy();
-  }
-
   window.typed = new Typed("#text", {
     strings: [txt],
-    typeSpeed: 10,
-    backSpeed: 10,
+    typeSpeed: 5,
+    backSpeed: 5,
+    backDelay: 100,
     showCursor: true,
     cursorChar: "|",
     autoInsertCss: true,
@@ -186,6 +182,7 @@ function goForest() {
 }
 
 function buyWispy() {
+  let buyWispyText;
   if (maxWispy < 5) {
     if (gold >= 25) {
       gold -= 25;
@@ -194,46 +191,50 @@ function buyWispy() {
       goldText.innerText = gold;
       wispyText.innerText = currentWispy;
       maxWispyText.innerText = maxWispy;
-      type("You purchase a vial of Wispy.");
+      buyWispyText = "You purchase a vial of Wispy.";
     } else {
-      type("You do not have enough gold to buy a vial of Wispy.");
+      buyWispyText = "You do not have enough gold to buy a vial of Wispy.";
     }
   } else {
-    type(
-      "The merchant looks at you in utter disbelief, you have no more place on your person to carry anymore vials.");
+    buyWispyText = "The merchant looks at you in utter disbelief, you have no more place on your person to carry anymore vials.";
   }
+  type(buyWispyText);
 }
 
 function buyWeapon() {
+  let buyWeaponText;
   if (currentWeapon < weapons.length - 1) {
     if (gold >= 30) {
       gold -= 30;
       currentWeapon++;
       goldText.innerText = gold;
       let newWeapon = weapons[currentWeapon].name;
-      type("You now have a " + newWeapon + ".");
+      buyWeaponText = "You now have a " + newWeapon + ".";
       inventory.push(newWeapon);
-      text.innerText += " In your inventory you have: " + inventory;
+      buyWeaponText += " In your inventory you have: " + inventory;
     } else {
-      type("You do not have enough gold to buy a weapon.");
+      buyWeaponText = "You do not have enough gold to buy a weapon.";
     }
   } else {
-    type("You've already bought every weapon that the merchant has offered you.");
+    buyWeaponText = "You've already bought every weapon that the merchant has offered you.";
     button2.innerText = "Sell weapon for 15 gold";
     button2.onclick = sellWeapon;
   }
+  type(buyWeaponText);
 }
 
 function sellWeapon() {
+  let sellWeaponText;
   if (inventory.length > 1) {
     gold += 15;
     goldText.innerText = gold;
     let currentWeapon = inventory.shift();
-    type("You sold a " + currentWeapon + ".");
-    text.innerText += " In your inventory you have: " + inventory;
+    sellWeaponText = "You sold a " + currentWeapon + ".";
+    sellWeaponText += " In your inventory you have: " + inventory;
   } else {
-    type("The merchant isn't interested in buying any claws today.");
+    sellWeaponText = "The merchant isn't interested in buying any claws today.";
   }
+  type(sellWeaponText);
 }
 
 function fightLesserShadow() {
@@ -260,13 +261,14 @@ function goFight() {
 }
 
 function attack() {
-  type("The " + monsters[fighting].name + " attacks. You attack it with your " + weapons[currentWeapon].name + ".");
+  let attackText;
+  attackText = "The " + monsters[fighting].name + " attacks. You attack it with your " + weapons[currentWeapon].name + ".";
   health -= getMonsterAttackValue(monsters[fighting].level);
   if (isMonsterHit()) {
     monsterHealth -=
       weapons[currentWeapon].power + Math.floor(Math.random() * xp) + 1;
   } else {
-    text.innerText += " You miss.";
+    attackText += " You miss.";
   }
   healthText.innerText = health;
   monsterHealthText.innerText = monsterHealth;
@@ -285,69 +287,11 @@ function attack() {
     }
   }
   if (Math.random() <= 0.1 && inventory.length !== 1) {
-    text.innerText += " Your " + inventory.pop() + " breaks.";
+    attackText += " Your " + inventory.pop() + " breaks.";
     currentWeapon--;
   }
+  type(attackText);
 }
-
-/*function combat() {
-  if (playerTurn = true) {
-    playerAttack()
-  } else {
-    monsterAttack()
-  }
-}
-
-function playerAttack() {
-  text.innerText = "You attack with your " + weapons[currentWeapon].name + ".";
-  if (isMonsterHit()) {
-    monsterHealth -=
-      weapons[currentWeapon].power + Math.floor(Math.random() * xp) + 1;
-      playerTurn = false;
-  } else {
-    text.innerText += " You miss.";
-    playerTurn = false;
-  }
-  monsterHealthText.innerText = monsterHealth;
-  if (health <= 0) {
-    lose();
-  } else if (monsterHealth <= 0) {
-    if (fighting === 1) {
-      forestComplete = true;
-      console.log(forestComplete);
-      defeatMonster();
-    }
-    if (fighting === 2) {
-      winGame();
-    } else {
-      defeatMonster();
-    }
-  }
-}
-
-setTimeout(function monsterAttack() {
-  text.innerText += " The " + monsters[fighting].name + " attacks.";
-  health -= getMonsterAttackValue(monsters[fighting].level);
-  healthText.innerText = health;
-  if (health <= 0) {
-    lose();
-  } else if (monsterHealth <= 0) {
-    if (fighting === 1) {
-      forestComplete = true;
-      console.log(forestComplete);
-      defeatMonster();
-    }
-    if (fighting === 2) {
-      winGame();
-    } else {
-      defeatMonster();
-    }
-  }
-  if (Math.random() <= 0.1 && inventory.length !== 1) {
-    text.innerText += " Their strike hits your " + inventory.pop() + "." + "It breaks.";
-    currentWeapon--;
-  }
-}, 1500);*/
 
 function getMonsterAttackValue(level) {
   const hit = level * 5 - Math.floor(Math.random() * xp);
@@ -424,24 +368,26 @@ function pickEight() {
 }
 
 function pick(guess) {
+  let pickText;
   const numbers = [];
   while (numbers.length < 10) {
     numbers.push(Math.floor(Math.random() * 11));
   }
   type("You picked " + guess + ". Here are the random numbers:\n");
   for (let i = 0; i < 10; i++) {
-    text.innerText += numbers[i] + "\n";
+    pickText += numbers[i] + "\n";
   }
   if (numbers.includes(guess)) {
-    text.innerText += "Right! You win 20 gold!";
+    pickText += "Right! You win 20 gold!";
     gold += 20;
     goldText.innerText = gold;
   } else {
-    text.innerText += "Wrong! You lose 10 health!";
+    pickText += "Wrong! You lose 10 health!";
     health -= 10;
     healthText.innerText = health;
     if (health <= 0) {
       lose();
     }
   }
+  type(pickText);
 }
