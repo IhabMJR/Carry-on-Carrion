@@ -30,6 +30,18 @@ body {
   }
 }
 
+.background {
+  z-index: -1;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  min-width: 100vw;
+  min-height: 100vh;
+  object-fit: cover;
+}
+
+
 .title {
   font-family: gothica_bold;
   color: var(--white);

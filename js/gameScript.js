@@ -124,15 +124,6 @@ button1.onclick = goMerchant;
 button2.onclick = goForest;
 button3.onclick = fightBoss;
 
-// initialize animated background
-const spritesheet = new Image();
-spritesheet.src = '../img/bg_spritesheet.png';
-
-spritesheet.onload = () => {
-  document.body.style.backgroundImage = `url('${spritesheet.src}')`;
-  document.body.style.animation = 'spritesheetAnimation 4s steps(96) infinite';
-};
-
 function update(location) {
   monsterStats.style.display = "none";
   button1.innerText = location["button text"][0];
