@@ -21,15 +21,6 @@ body {
   background-color: var(--black);
 }
 
-@keyframes spritesheetAnimation {
-  0% {
-    background-position: 0 0;
-  }
-  100% {
-    background-position: -184320px 0;
-  }
-}
-
 .background {
   z-index: -1;
   position: fixed;

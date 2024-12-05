@@ -141,7 +141,7 @@ function type(txt) {
     typeSpeed: 5,
     backSpeed: 5,
     backDelay: 100,
-    showCursor: true,
+    showCursor: false,
     cursorChar: "|",
     autoInsertCss: true,
     preStringTyped: () => {
@@ -304,21 +304,22 @@ function isMonsterHit() {
 }
 
 function heal() {
+  let healText;
   if (currentWispy > 0) {
     currentWispy--;
     health += 15;
     wispyText.innerText = currentWispy;
     healthText.innerText = health;
-    type("You drink a vial of Wispy, you regain 15 health.");
+    healText = "You drink a vial of Wispy, you regain 15 health.";
   } else if (health <= 25) {
-    type(
-      '"You grow weaker Carrion, perhaps you shall meet your end once more?" The voice whispers. You are out of Wispy vials.');
+    healText = '"You grow weaker Carrion, perhaps you shall meet your end once more?" The voice whispers. You are out of Wispy vials.';
   } else if (health >= 85) {
-    type(
-      '"Do you truly fear your opponent this much?" the voice inside you rings out in a shameful tone. You are out of Wispy vials.');
+    healText =
+      '"Do you truly fear your opponent this much?" the voice inside you rings out in a shameful tone. You are out of Wispy vials.';
   } else {
-    type("You're all out of Wispy.");
+    healText = "You're all out of Wispy.";
   }
+  type(healText);
 }
 
 function defeatMonster() {
